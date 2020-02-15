@@ -9,14 +9,22 @@ class BaseModel:
     """BaseModel class
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Class constructor, creates a new instance
            of a class
+           Args:
+               *args (tuple): arguments of function
+               **kwargs (dict): argument dictionary of function
            Public Attrib:
                id (str): id of an instance when it's created
                created_at (datetime):
                updated_at (datetime):
         """
+        # task 4
+        if kwargs is not None:
+            for key, value in kwargs.items():
+                self.key = value
+        # end of task 4
         self.id = str(uuid.uuid4())
         self.created_at = datetime.datetime.now()
         self.updated_at = datetime.datetime.now()
@@ -25,7 +33,7 @@ class BaseModel:
         """Prints this format:
                [<class name>] (<self.id>) <self.__dict__>
         """
-        return("[{}] ({}) <{}>".format(self.__class__.__name__,
+        return("[{}] ({}) {}".format(self.__class__.__name__,
                                        self.id, self.__dict__))
 
     def save(self):
