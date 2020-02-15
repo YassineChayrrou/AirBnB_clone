@@ -13,7 +13,7 @@ class HBNBCommand(cmd.Cmd):
             return self.onecmd('\n')
 
     def help(self):
-        print(''.join([
+        print('\n\n'.join([
             'Documented commands (type help <topic>):',
             '========================================',
                 ]))
@@ -24,6 +24,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, *args):
         "EOF: type Ctrl + d to exit"
+        print("")
         return True
 
 if __name__ == '__main__':
