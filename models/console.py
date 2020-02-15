@@ -13,10 +13,10 @@ class HBNBCommand(cmd.Cmd):
             return self.onecmd('\n')
 
     def help(self):
-        print('\n\n'.join([
-            'Documented commands (type help <topic>):',
-            '========================================',
-                ]))
+        print("""
+           Documented commands (type help <topic>):
+           ========================================
+             """)
 
     def do_quit(self, *args):
         "Quit command to exit the program\n"
