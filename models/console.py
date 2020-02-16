@@ -1,11 +1,17 @@
 #!/usr/bin/python3
 import cmd
+import json
+from base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
     """HBNBCommand Class that inherits from cmd
        acts as command line console"""
     prompt = '(hbnb) '
+
+    def do_create(self, arg):
+        model = BaseModel()
+        return print("{}".format(model))
 
     def emptyline(self):
         """emptyline handler"""
@@ -18,11 +24,11 @@ class HBNBCommand(cmd.Cmd):
            ========================================
              """)
 
-    def do_quit(self, *args):
+    def do_quit(self, arg):
         "Quit command to exit the program\n"
         return True
 
-    def do_EOF(self, *args):
+    def do_EOF(self, arg):
         "EOF: type Ctrl + d to exit"
         print("")
         return True
