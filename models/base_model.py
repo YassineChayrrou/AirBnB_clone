@@ -23,7 +23,7 @@ class BaseModel:
                updated_at (datetime):
         """
         # task 4
-        if kwargs is not None:
+        if kwargs is not None and kwargs != {}:
             for key, value in kwargs.items():
                 if key != "__class__":
                     if key == "created_at":
@@ -34,9 +34,10 @@ class BaseModel:
                             value, "%Y-%m-%dT%H:%M:%S.%f")
                     setattr(self, key, value)
         # end of task 4
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """Prints this format:
