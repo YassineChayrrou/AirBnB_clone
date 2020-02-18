@@ -23,16 +23,21 @@ class BaseModel:
                updated_at (datetime):
         """
         # task 4
-        if kwargs is not None:
+        if kwargs is not None and kwargs != {}:
             for key, value in kwargs.items():
                 if key != "__class__":
-                    self.key = value
-                if key == "created_at" or key == "updated_at":
-                    self.key = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                    if key == "created_at":
+                        self.created_at = datetime.strptime(
+                            value, "%Y-%m-%dT%H:%M:%S.%f")
+                    if key == "updated_at":
+                        self.updated_at = datetime.strptime(
+                            value, "%Y-%m-%dT%H:%M:%S.%f")
+                    setattr(self, key, value)
         # end of task 4
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """Prints this format:
