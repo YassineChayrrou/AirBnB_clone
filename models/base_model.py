@@ -4,6 +4,7 @@ BaseModel that defines all common attributes/methods for other classes.
 dev branch
 """
 from datetime import datetime
+import models
 import uuid
 
 
@@ -29,15 +30,17 @@ class BaseModel:
                     if key == "created_at":
                         self.created_at = datetime.strptime(
                             value, "%Y-%m-%dT%H:%M:%S.%f")
-                    if key == "updated_at":
+                    elif key == "updated_at":
                         self.updated_at = datetime.strptime(
                             value, "%Y-%m-%dT%H:%M:%S.%f")
-                    setattr(self, key, value)
+                    else:
+                        setattr(self, key, value)
         # end of task 4
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def __str__(self):
         """Prints this format:
@@ -51,6 +54,7 @@ class BaseModel:
            with the current datetime
         """
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """Returns a dictionary containing all keys/values
