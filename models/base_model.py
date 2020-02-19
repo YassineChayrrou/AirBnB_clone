@@ -23,19 +23,16 @@ class BaseModel:
                created_at (datetime):
                updated_at (datetime):
         """
-        # task 4
         if kwargs is not None and kwargs != {}:
             for key, value in kwargs.items():
-                if key != "__class__":
-                    if key == "created_at":
-                        self.created_at = datetime.strptime(
-                            value, "%Y-%m-%dT%H:%M:%S.%f")
-                    elif key == "updated_at":
-                        self.updated_at = datetime.strptime(
-                            value, "%Y-%m-%dT%H:%M:%S.%f")
-                    else:
+                if key == "created_at":
+                    self.created_at = datetime.strptime(
+                        value, "%Y-%m-%dT%H:%M:%S.%f")
+                elif key == "updated_at":
+                    self.updated_at = datetime.strptime(
+                        value, "%Y-%m-%dT%H:%M:%S.%f")
+                elif key != "__class__":
                         setattr(self, key, value)
-        # end of task 4
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
@@ -60,8 +57,22 @@ class BaseModel:
         """Returns a dictionary containing all keys/values
            of __dict__ of the instance
         """
+        # This doesn't work
+        # I still don't know why
+        """
         self.created_at = self.created_at.isoformat()
         self.updated_at = self.updated_at.isoformat()
         d = self.__dict__
+        d['__class__'] = self.__class__.__name__
+        return(d)
+        """
+        d = {}
+        for key, value in self.__dict__.items():
+            if key == 'created_at':
+                d['created_at'] = self.created_at.isoformat()
+            elif key == 'updated_at':
+                d['updated_at'] = self.updated_at.isoformat()
+            else:
+                d[key] = value
         d['__class__'] = self.__class__.__name__
         return(d)

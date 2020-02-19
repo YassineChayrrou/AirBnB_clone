@@ -32,6 +32,10 @@ class FileStorage:
         d = {}
         for key, value in FileStorage.__objects.items():
             d[key] = value.to_dict()
+        for key in d.keys():
+            for k in key:
+                if k == "__class__":
+                    del(key[k])
         with open(FileStorage.__file_path, 'w') as f:
             json.dump(d, f)
 
@@ -46,7 +50,6 @@ class FileStorage:
                     for key, value in array.items():
                         tab = key.split('.')
                         my_instance = eval(tab[0])(**value)
-                        # FileStorage.__objects[key] = my_instance
                         self.new(my_instance)
         except:
             pass
