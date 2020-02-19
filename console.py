@@ -74,9 +74,8 @@ based on class name and id
                        if len(parsed) >= 3:
                            if len(parsed) >= 4:
                                if parsed[3][0] == '"':
-                                   quote = arg.split('"')
-                                   return print(quote[1])
-#                                   return print("<{}> is set and to be added here ------///".format(parsed[3]))
+                                   new_parsed = arg.split('"')
+                                   return print(new_parsed[1])
                            return print("** value missing **")
                        return print("** attribute name missing **")
                    return print("** no instance found **")
