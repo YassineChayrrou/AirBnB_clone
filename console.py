@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 import cmd
 import json
+from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
-class_list = ('User', 'City', 'BaseModel')
+from models import storage
+class_list = ('BaseModel')
 uuid_list = ('test', 'test2', '1234')
 attribute_list = ('name','email','something_else')
 
@@ -19,24 +21,22 @@ class HBNBCommand(cmd.Cmd):
             if parsed[0] in class_list:
                 model = BaseModel()
                 #save method by aziz
+                model.save()
                 return print("{}".format(model.id))
             return print("** class doesn't exist **")
         print("** class name missing **")
 
     def do_show(self, arg):
         """Prints the string representation of an instance
-based on class name and id
+           based on class name and id
         """
         parsed = parse(arg)
         if len(parsed) >= 1:
             if parsed[0] in class_list:
-                model = BaseModel()
-                model.first_name = "Yassine"
-                model = BaseModel()
                 if len(parsed) >= 2:
-                    if parsed[1] in uuid_list:
-                        print("still under active development")
-                        return print("checked:\n{}".format(model))
+                    if parsed[1]:
+                        model.reload()
+                        return print("{}".format(model))
                     return print("** no instance found **")
                 return print("** instance id missing **")
             return print("** class doesn't exist **")
@@ -57,12 +57,18 @@ based on class name and id
 
     def do_all(self, arg):
         parsed = parse(arg)
+        d = storage.all()
         if len(parsed) == 0:
-            #prints storage.json in case of argument all(only)
-            return print("prints all classes string representation")
+            l = []
+            for k, v in d.items():
+                l.append(str(v))
+            return(print(l))
         if parsed[0] in class_list:
-            model = BaseModel()
-            return print('mimics all string rep of class <BaseModel>\n["{}"]'.format(model))
+            l = []
+            for k, v in d.items():
+                if v.__class__.__name__ == parsed[0]:
+                    l.append(str(v))
+            return(print(l))
         return print("** class doesn't exit **")
 
     def do_update(self, arg):
