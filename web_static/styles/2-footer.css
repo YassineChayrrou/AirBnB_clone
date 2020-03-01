@@ -1,0 +1,11 @@
+footer {
+	display: grid;
+	height: 60px;
+	width: 100%;
+	background-color: #00FF00;
+	bottom: 0;
+	position: absolute;
+}
+footer span {
+	margin: auto;
+}
